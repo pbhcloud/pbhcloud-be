@@ -1,0 +1,37 @@
+name: Build&Deploy the App to Vercel
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: 🎉 Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Source
+        uses: actions/checkout@v4
+      - name: Create .env file
+        run: echo "TEST_VAR=${{ secrets.TEST_VAR}}" >> .env && echo "SITE_URL=${{ secrets.SITE_URL}}" >> .env
+      - name: Login to docker hub
+        run: docker login -u ${{ secrets.DOCKER_USERNAME}} -p ${{ secrets.DOCKER_PASSWORD }}
+      - name: verify login
+        run: cat ~/.docker/config.json
+      - name: Build docker image
+        run: docker build -t shonaizen/pbhcloud-be .
+      - name: Publish image to docker hub
+        run: docker push shonaizen/pbhcloud-be:latest
+
+  deploy:
+    needs: build
+    runs-on: self-hosted
+    steps:
+      - name: Login to docker hub
+        run: sudo docker login -u ${{ secrets.DOCKER_USERNAME}} -p ${{ secrets.DOCKER_PASSWORD }}
+      - name: Delete old container if exists
+        run: sudo docker rm -f pbhcloud-be-container
+      - name: pull image from DockerHub
+        run: sudo docker pull shonaizen/pbhcloud-be:latest
+      - name: Run docker container
+        run: sudo docker run -d -p 3000:3000 --name pbhcloud-be-container shonaizen/pbhcloud-be
