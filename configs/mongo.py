@@ -7,16 +7,17 @@ import os
 load_dotenv()
 uri = os.getenv('MONGO_URL')
 
-client = MongoClient(uri, server_api=ServerApi('1'))
+# TODO - Change it accordingly to whats written in main.py
+# client = MongoClient(uri, server_api=ServerApi('1'))
 
-# Send a ping to confirm a successful connection
-try:
-    client.admin.command('ping')
-    print("Pinged Mongo cluster deployment. Successfully connected to MongoDB!")
-except Exception as e:
-    print(e)
+# # Send a ping to confirm a successful connection
+# try:
+#     client.admin.command('ping')
+#     print("Pinged Mongo cluster deployment. Successfully connected to MongoDB!")
+# except Exception as e:
+#     print(e)
 
-db = client['testDB']
-collection = db['users']
-doc_count = collection.count_documents({})
-print(doc_count)
+# db = client['testDB']
+# collection = db['users']
+# doc_count = collection.count_documents({})
+# print(doc_count)

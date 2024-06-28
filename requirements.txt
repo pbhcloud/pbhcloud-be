@@ -1,4 +1,5 @@
-fastapi
+flask
+flask-cors
 uvicorn[standard]
 boto3
 pymongo
