@@ -1,3 +1,5 @@
+import boto3
+
 
 # Create an S3 client for IDrive e2
 # endpoint = "l4g4.ch11.idrivee2-2.com"
