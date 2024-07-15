@@ -3,3 +3,4 @@ flask-cors
 uvicorn[standard]
 boto3
 pymongo
+bcrypt
