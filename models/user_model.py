@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field
 from typing import List, Optional, Union
 from pymongo import MongoClient
 from datetime import datetime
-from ..objectid import PydanticObjectId
+from ..utils.objectid import PydanticObjectId
 import json
 class User(BaseModel):
     id: Optional[PydanticObjectId] = Field(None, alias="_id")
